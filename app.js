@@ -13,7 +13,7 @@ tick();setInterval(tick,1000);
 const hv=$('#heroVid');if(hv){const pl=()=>hv.play&&hv.play().catch(()=>{});pl();document.addEventListener('visibilitychange',()=>{if(!document.hidden)pl()})}
 
 /* ---- меню на телефоне ---- */
-(function(){const b=$('#burger'),n=$('#nav');if(!b)return;const set=o=>{n.classList.toggle('open',o);b.setAttribute('aria-expanded',o)};b.onclick=()=>set(!n.classList.contains('open'));n.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>set(false)));document.addEventListener('keydown',e=>{if(e.key==='Escape')set(false)})})();
+(function(){const b=$('#burger'),n=$('#nav');if(!b)return;const set=o=>{n.classList.toggle('open',o);b.setAttribute('aria-expanded',o);document.body.classList.toggle('menu-open',o)};b.onclick=()=>set(!n.classList.contains('open'));n.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>set(false)));document.addEventListener('keydown',e=>{if(e.key==='Escape')set(false)})})();
 
 /* ---- данные ---- */
 const TYPES={
@@ -87,7 +87,7 @@ function feedEmpty(){$('#feedImg').style.opacity=0;$('#feedName').textContent='C
 function select(i){
   st.sel=i;const p=SCENES[st.sc].pts[i],fi=$('#feedImg'),feed=$('#feed');
   fi.style.opacity=0;fi.onload=null;fi.src=SCENES[st.sc].img;
-  const place=()=>{const W=feed.clientWidth,s=p.z,w=W*s,h=w*9/16,H=feed.clientHeight;fi.style.width=w+'px';fi.style.left=(W/2-p.vx/100*w)+'px';fi.style.top=(H/2-p.vy/100*h)+'px';fi.style.opacity=1};
+  const place=()=>{const W=feed.clientWidth,s=p.z,w=W*s,h=w*9/16,H=feed.clientHeight;fi.style.width=w+'px';const cl=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));fi.style.left=cl(W/2-p.vx/100*w,W-w,0)+'px';fi.style.top=cl(H/2-p.vy/100*h,H-h,0)+'px';fi.style.opacity=1};
   if(fi.complete)place();else fi.onload=place;
   $('#feedName').textContent='CAM '+pad(i+1)+' · '+p.n;$('#feedType').textContent=TYPES[p.t].use;
   $('#pickTitle').textContent=p.n+' · '+TYPES[p.t].use.toLowerCase();
