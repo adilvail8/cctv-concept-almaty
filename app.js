@@ -12,6 +12,9 @@ tick();setInterval(tick,1000);
 /* ---- герой: видео сам поворачивается, без ручного управления ---- */
 const hv=$('#heroVid');if(hv){const pl=()=>hv.play&&hv.play().catch(()=>{});pl();document.addEventListener('visibilitychange',()=>{if(!document.hidden)pl()})}
 
+/* ---- меню на телефоне ---- */
+(function(){const b=$('#burger'),n=$('#nav');if(!b)return;const set=o=>{n.classList.toggle('open',o);b.setAttribute('aria-expanded',o)};b.onclick=()=>set(!n.classList.contains('open'));n.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>set(false)));document.addEventListener('keydown',e=>{if(e.key==='Escape')set(false)})})();
+
 /* ---- данные ---- */
 const TYPES={
   dome:{name:'Купольная',tag:'Помещения',price:18000,img:'img/cam1.jpg',list:['Потолок или стена в помещении','Разрешение 2 Мп','Ночной режим, запись на регистратор'],use:'Купольная камера'},
