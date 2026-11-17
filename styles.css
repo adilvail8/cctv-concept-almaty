@@ -210,3 +210,4 @@ section{padding:clamp(56px,8vw,104px) var(--pad)}
   .contact-box{border-radius:28px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+@media (max-width:560px){.arch{aspect-ratio:1/1.05}.arch img{height:88%;transform:translate(-50%,-48%)}.osd.tl{top:9%}.osd.tr{top:14%}.osd.bl{bottom:6%}}
