@@ -211,3 +211,6 @@ section{padding:clamp(56px,8vw,104px) var(--pad)}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 @media (max-width:560px){.arch{aspect-ratio:1/1.05}.arch img{height:88%;transform:translate(-50%,-48%)}.osd.tl{top:9%}.osd.tr{top:14%}.osd.bl{bottom:6%}}
+
+.arch img{height:82%;transform:translate(-50%,-50%);-webkit-mask-image:radial-gradient(ellipse 70% 72% at 50% 50%,#000 70%,transparent 100%);mask-image:radial-gradient(ellipse 70% 72% at 50% 50%,#000 70%,transparent 100%)}
+@media (max-width:560px){.arch img{height:78%;transform:translate(-50%,-50%)}}

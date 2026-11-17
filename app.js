@@ -16,9 +16,15 @@ function loadFrames(){if(loaded)return;loaded=true;for(let i=0;i<FR;i++){const i
 if('requestIdleCallback' in window)requestIdleCallback(loadFrames,{timeout:2500});else setTimeout(loadFrames,1500);
 function show(i){i=Math.max(0,Math.min(FR-1,i));if(i===cur)return;cur=i;himg.src=`img/spin/s${pad(i)}.jpg`;hint.style.opacity=0}
 function ease(){const d=target-cur;if(Math.abs(d)<.5){show(target);timer=null;return}show(cur+Math.sign(d)*Math.max(1,Math.round(Math.abs(d)/4)));timer=setTimeout(ease,16)}
-function aim(e){loadFrames();const r=shot.getBoundingClientRect(),p=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));target=Math.round((1-p)*(FR-1));if(!timer)timer=setTimeout(ease,16)}
+let lastUser=0,hov=false;
+function aim(e){lastUser=Date.now();hov=true;loadFrames();const r=shot.getBoundingClientRect(),p=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));target=Math.round((1-p)*(FR-1));if(!timer)timer=setTimeout(ease,16)}
 shot.addEventListener('pointermove',aim);shot.addEventListener('pointerdown',aim);
-shot.addEventListener('pointerleave',()=>{target=0;if(!timer)timer=setTimeout(ease,16)});
+shot.addEventListener('pointerleave',()=>{hov=false;lastUser=Date.now()});
+/* автоповорот: камера сама качается, пока пользователь не трогает */
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
+  const T=8000,t0=Date.now();
+  setInterval(()=>{if(hov||Date.now()-lastUser<2500)return;loadFrames();const ph=((Date.now()-t0)%T)/T;target=Math.round((FR-1)*(0.5-0.5*Math.cos(ph*2*Math.PI)));if(!timer)timer=setTimeout(ease,16)},50);
+}
 
 /* ---- данные ---- */
 const TYPES={
