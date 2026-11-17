@@ -9,27 +9,8 @@ const clockStr=()=>{const d=new Date();return `${pad(d.getDate())}.${pad(d.getMo
 const tick=()=>{$('#osdClock').textContent=clockStr();$('#feedClock').textContent=clockStr()};
 tick();setInterval(tick,1000);
 
-/* ---- герой: поворот камеры (кадры с плавным смешиванием) ---- */
-const shot=$('#heroShot'),imgA=$('#spinImg'),imgB=$('#spinImg2'),hint=$('#spinHint');
-const FR=49,fsrc=i=>`img/spin/s${pad(i)}.jpg`;
-let loaded=false,pos=0,target=0,lastUser=0,hov=false,shownI=-1,shownF=-1;
-function loadFrames(){if(loaded)return;loaded=true;for(let i=0;i<FR;i++){const im=new Image();im.src=fsrc(i)}}
-if('requestIdleCallback' in window)requestIdleCallback(loadFrames,{timeout:2500});else setTimeout(loadFrames,1200);
-function paint(){
-  const p=Math.max(0,Math.min(FR-1,pos)),i=Math.floor(p),f=p-i,j=Math.min(FR-1,i+1);
-  if(i!==shownI){imgA.src=fsrc(i);shownI=i}
-  if(f>0.01){if(imgB.dataset.k!=j){imgB.src=fsrc(j);imgB.dataset.k=j}imgB.style.opacity=f}else imgB.style.opacity=0;
-}
-setInterval(()=>{
-  const auto=!hov&&Date.now()-lastUser>2500&&!matchMedia('(prefers-reduced-motion:reduce)').matches;
-  if(auto){loadFrames();const T=9000,ph=(Date.now()%T)/T;target=(FR-1)*(0.5-0.5*Math.cos(ph*2*Math.PI))}
-  const d=target-pos;if(Math.abs(d)<0.02)return;
-  pos+=d*(auto?0.5:0.16);if(Math.abs(pos-target)<0.02)pos=target;
-  if(Math.abs(d)>0.3)hint.style.opacity=0;paint();
-},16);
-function aim(e){lastUser=Date.now();hov=true;loadFrames();const r=shot.getBoundingClientRect(),p=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));target=(1-p)*(FR-1)}
-shot.addEventListener('pointermove',aim);shot.addEventListener('pointerdown',aim);
-shot.addEventListener('pointerleave',()=>{hov=false;lastUser=Date.now()});
+/* ---- герой: видео сам поворачивается, без ручного управления ---- */
+const hv=$('#heroVid');if(hv){const pl=()=>hv.play&&hv.play().catch(()=>{});pl();document.addEventListener('visibilitychange',()=>{if(!document.hidden)pl()})}
 
 /* ---- данные ---- */
 const TYPES={

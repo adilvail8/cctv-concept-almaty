@@ -214,3 +214,8 @@ section{padding:clamp(56px,8vw,104px) var(--pad)}
 
 .arch img{height:82%;transform:translate(-50%,-50%);-webkit-mask-image:radial-gradient(ellipse 70% 72% at 50% 50%,#000 70%,transparent 100%);mask-image:radial-gradient(ellipse 70% 72% at 50% 50%,#000 70%,transparent 100%)}
 @media (max-width:560px){.arch img{height:78%;transform:translate(-50%,-50%)}}
+
+.hero-shot{cursor:default;touch-action:auto}
+.arch video{position:absolute;left:50%;top:50%;height:82%;width:auto;max-width:none;transform:translate(-50%,-50%);pointer-events:none;-webkit-mask-image:radial-gradient(ellipse 70% 72% at 50% 50%,#000 70%,transparent 100%);mask-image:radial-gradient(ellipse 70% 72% at 50% 50%,#000 70%,transparent 100%)}
+@media (max-width:560px){.arch video{height:78%}}
+@media (prefers-reduced-motion:reduce){.arch video{animation:none}}
